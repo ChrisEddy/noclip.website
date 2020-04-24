@@ -1135,7 +1135,7 @@ void main() {
             if (isFormatSizedInteger(attr.format)) {
                 // See https://groups.google.com/d/msg/angleproject/yQb5DaCzcWg/Ova0E3wcAQAJ for more info.
                 console.warn("Vertex format uses sized integer types; this will cause a shader recompile on ANGLE platforms");
-                debugger;
+                // debugger;
             }
 
             const { size, type, normalized } = translateVertexFormat(attr.format);

@@ -147,7 +147,7 @@ function spawnLegacyActor(globals: dGlobals, legacy: d_a_noclip_legacy, actor: f
         chk.pos[1] += 10.0;
         const y = globals.scnPlay.bgS.GroundCross(chk);
         if (y === -Infinity)
-            debugger;
+            // debugger;
         dstMatrix[13] = y;
     }
 
