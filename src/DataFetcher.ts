@@ -9,9 +9,9 @@ export interface NamedArrayBufferSlice extends ArrayBufferSlice {
 }
 
 function getDataStorageBaseURL(isDevelopment: boolean): string {
-    if (isDevelopment)
+    /* if (isDevelopment)
         return `/data`;
-    else
+    else */
         return `https://gznoclip1.b-cdn.net`;
 }
 
@@ -27,6 +27,8 @@ export const enum DataFetcherFlags {
 
 export type AbortedCallback = () => void;
 
+window.reqs = {};
+
 class DataFetcherRequest {
     public request: XMLHttpRequest | null = null;
     public progress: number = 0;
@@ -39,6 +41,14 @@ class DataFetcherRequest {
     private retriesLeft = 2;
 
     constructor(public url: string, private flags: DataFetcherFlags, private abortedCallback: AbortedCallback | null) {
+        console.log('req', url);
+        window.reqs[url] = true;
+        fetch('http://127.0.0.1:9000/', {
+            method: 'PUT',
+            body: JSON.stringify({
+                url,
+            }),
+        }).catch(console.warn);
         this.promise = new Promise((resolve, reject) => {
             this.resolve = resolve;
             this.reject = reject;
