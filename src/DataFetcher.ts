@@ -27,7 +27,10 @@ export const enum DataFetcherFlags {
 
 export type AbortedCallback = () => void;
 
-window.reqs = {};
+declare global {
+    interface Window { reqs: any; }
+}
+window.reqs = window.reqs || {};
 
 class DataFetcherRequest {
     public request: XMLHttpRequest | null = null;

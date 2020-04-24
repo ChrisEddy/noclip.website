@@ -846,6 +846,9 @@ declare global {
 }
 
 window.main = new Main();
+navigator.xr.addEventListener('sessiongranted', e => {
+    window.main.webXRContext.start();
+});
 
 // Debug utilities.
 declare global {
