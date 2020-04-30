@@ -222,6 +222,7 @@ class Main {
     private postAnimFrameCanvas = new AnimationLoop();
     private postAnimFrameWebXR = new AnimationLoop();
     private webXRContext: WebXRContext;
+    public sessiongranted: boolean = false;
 
     public sceneTimeScale = 1.0;
 
@@ -332,10 +333,16 @@ class Main {
                 scope.setExtra('git-revision', GIT_REVISION);
             });
         }
+
+        console.log('check session granted', this.sessiongranted);
+        if (this.sessiongranted) {
+            await this.webXRContext.start();
+        }
     }
 
     private _onHashChange(): void {
-        const hash = window.location.hash;
+        const hash = `#oot3d/spot04;ShareData=AL}WZ8o]h]Ta$cS9063Z=W7ba6nNZYUZ:krTv,P$VXEsvUs2RiStlr58u^(G+5`; // window.location.hash;
+        console.log('load hash', hash);
         if (hash.startsWith('#'))
             this._loadState(decodeURIComponent(hash.slice(1)));
     }
@@ -847,7 +854,9 @@ declare global {
 
 window.main = new Main();
 navigator.xr.addEventListener('sessiongranted', e => {
-    window.main.webXRContext.start();
+    console.log('got main', window.main, window.main && window.main.webXRContext, window.main && window.main.webXRContext && window.main.webXRContext.start);
+    // window.main.webXRContext.start();
+    window.main.sessiongranted = true;
 });
 
 // Debug utilities.

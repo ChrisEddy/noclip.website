@@ -41,16 +41,17 @@ app.put('*', (req, res, next) => {
       console.log('got url', u);
       const p = path.join('d', u.pathname);
       const d = path.dirname(p);
-      mkdirp(d);
-      fetch(u)
-        .then(res => res.arrayBuffer())
-        .then(ab => {
-          console.log('got ab', u, ab);
-          const b = Buffer.from(ab);
-          fs.writeFileSync(p, b, err => {
-            if (err) {
-              console.warn('error', u, err.stack);
-            }
+      mkdirp(d, err => {
+        fetch(u)
+          .then(res => res.arrayBuffer())
+          .then(ab => {
+            console.log('got ab', u, ab);
+            const b = Buffer.from(ab);
+            fs.writeFileSync(p, b, err => {
+              if (err) {
+                console.warn('error', u, err.stack);
+              }
+            });
           });
         });
     } catch (err) {
@@ -61,6 +62,23 @@ app.put('*', (req, res, next) => {
 });
 http.createServer(app)
   .listen(9000);
+
+const ootKokiriFiles = require('./oot_kokiri.js');
+ootKokiriFiles.forEach(u => {
+  u = new url.URL(u);
+  const p = u.pathname;
+  if (p !== '/') {
+    console.log('got pathname', p);
+    const src = path.join(__dirname, 'noclip-data', 'data', p);
+    const dst = path.join(__dirname, 'dist', 'data', p);
+    const dstDir = path.dirname(dst);
+    console.log('create dir', src, dst, dstDir);
+    mkdirp(dstDir, err => {
+      fs.copyFileSync(src, dst);
+    });
+  }
+});
+console.log(`http://127.0.0.1:8080/#oot3d/spot04`);
 
 module.exports = merge(common, {
   mode: 'development',

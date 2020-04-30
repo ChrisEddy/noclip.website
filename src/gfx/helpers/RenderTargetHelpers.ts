@@ -194,7 +194,7 @@ export function makeClearRenderPassDescriptor(shouldClearColor: boolean, clearCo
     }
 }
 
-export const standardFullClearRenderPassDescriptor = makeClearRenderPassDescriptor(true, colorNewFromRGBA(0.88, 0.88, 0.88, 1.0));
+export const standardFullClearRenderPassDescriptor = makeClearRenderPassDescriptor(true, colorNewFromRGBA(0, 0, 0, 0));
 export const opaqueBlackFullClearRenderPassDescriptor = makeClearRenderPassDescriptor(true, OpaqueBlack);
 export const transparentBlackFullClearRenderPassDescriptor = makeClearRenderPassDescriptor(true, TransparentBlack);
 export const depthClearRenderPassDescriptor = makeClearRenderPassDescriptor(false, TransparentBlack);

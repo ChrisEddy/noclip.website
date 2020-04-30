@@ -9,10 +9,10 @@ export interface NamedArrayBufferSlice extends ArrayBufferSlice {
 }
 
 function getDataStorageBaseURL(isDevelopment: boolean): string {
-    /* if (isDevelopment)
+    // if (isDevelopment)
         return `/data`;
-    else */
-        return `https://gznoclip1.b-cdn.net`;
+    /* else
+        return `https://gznoclip1.b-cdn.net`; */
 }
 
 export function getDataURLForPath(url: string, isDevelopment: boolean = IS_DEVELOPMENT): string {

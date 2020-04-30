@@ -614,11 +614,18 @@ void main() {
 `;
         const fullscreenFS: string = `
 uniform sampler2D u_Texture;
+// uniform sampler2D u_dTexture;
 in vec2 v_TexCoord;
 
 void main() {
     vec4 color = texture(SAMPLER_2D(u_Texture), v_TexCoord);
-    gl_FragColor = vec4(color.rgb, 1.0);
+    // vec4 depth = texture(SAMPLER_2D(u_dTexture), v_TexCoord);
+    if (color.r == 0.0 && color.g == 0.0 && color.b == 0.0 /*&& color.a == 0.0*/) {
+      discard;
+    } else {
+      gl_FragColor = vec4(color.rgb, 1.0);
+      // gl_FragColor.r += 0.5;
+    }
 }
 `;
 
@@ -764,7 +771,11 @@ void main() {
         this._currentTextures[0] = null;
         this._currentSamplers[0] = null;
         this._useProgram(this._fullscreenCopyProgram);
+        // gl.disable(gl.DEPTH_TEST);
+        gl.depthMask(false);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
+        // gl.enable(gl.DEPTH_TEST);
+        gl.depthMask(true);
     }
     //#endregion
 
